@@ -1,8 +1,10 @@
+import axios from 'axios';
 /*
   STEP 1: using axios, send a GET request to the following URL
     (replacing the placeholder with your Github name):
     https://api.github.com/users/<your name>
 */
+
 
 /*
   STEP 2: Inspect and study the data coming back, this is YOUR
@@ -28,7 +30,30 @@
     user, and adding that card to the DOM.
 */
 
-const followersArray = [];
+const followersArray = [ 'tetondan',
+  'dustinmyers',
+  'justsml',
+  'luishrd',
+  'bigknell',
+'makeityourself121',
+'KingAtoki'];
+  followersArray.forEach(e=>{
+    axios.get(`https://api.github.com/users/${e}`)
+    .then((res)=> {
+      
+        const pro=cardMaker(res.data)
+        hCard.appendChild(pro)
+      //res.data=obj
+    // console.log(res)
+    // console.log(res.data.name)
+    })
+    .catch(err=>{
+      console.log(err)
+    })
+    .finally(()=>{
+      console.log('done')
+    })
+  })
 
 /*
   STEP 3: Create a function that accepts a single object as its only argument.
@@ -49,7 +74,62 @@ const followersArray = [];
       </div>
     </div>
 */
+const hCard=document.querySelector('.cards')
 
+function cardMaker(obj){
+
+  const card=document.createElement('div')
+  card.classList.add('card')
+
+  const image=document.createElement('img')
+  image.src= obj.avatar_url;
+  
+  const cardInfo=document.createElement('div')
+  cardInfo.classList.add('card-info')
+
+  const name=document.createElement('h3')
+  name.classList.add('name')
+  name.textContent=obj.name
+
+  const username=document.createElement('p')
+  username.classList.add('username')
+  username.textContent=obj.login
+
+  const location=document.createElement('p')
+  location.textContent=`Location: ${obj.location}`
+
+  const profileLink=document.createElement('p')
+  const link=document.createElement('a')
+  link.href=obj.html_url
+  //link.appendChild(profileLink)
+  profileLink.textContent=`Profile: ${link}`
+
+  const followers=document.createElement('p')
+  followers.textContent=`Followers: ${obj.followers}`
+
+  const following=document.createElement('p')
+  following.textContent=`Following: ${obj.following}`
+
+  const bio=document.createElement('p')
+  bio.textContent=`Bio: ${obj.bio}`
+
+  
+  hCard.appendChild(card)
+  card.appendChild(image)
+  card.appendChild(cardInfo)
+  cardInfo.appendChild(name)
+  cardInfo.appendChild(username)
+  cardInfo.appendChild(location)
+  cardInfo.appendChild(profileLink)
+  cardInfo.appendChild(followers)
+  cardInfo.appendChild(following)
+  cardInfo.appendChild(bio)
+
+  return card
+}
+
+cardMaker()
+// cardMaker()
 /*
   List of LS Instructors Github username's:
     tetondan
