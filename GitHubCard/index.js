@@ -29,22 +29,23 @@ import axios from 'axios';
     Using that array, iterate over it, requesting data for each user, creating a new card for each
     user, and adding that card to the DOM.
 */
-
+const hCard=document.querySelector('.cards')
 const followersArray = [ 'tetondan',
   'dustinmyers',
   'justsml',
   'luishrd',
   'bigknell',
 'makeityourself121',
-'KingAtoki'];
+'KingAtoki',
+'BrityHemming'];
   followersArray.forEach(e=>{
     axios.get(`https://api.github.com/users/${e}`)
     .then((res)=> {
-      
+      console.log(res)
         const pro=cardMaker(res.data)
         hCard.appendChild(pro)
       //res.data=obj
-    // console.log(res)
+   
     // console.log(res.data.name)
     })
     .catch(err=>{
@@ -74,7 +75,7 @@ const followersArray = [ 'tetondan',
       </div>
     </div>
 */
-const hCard=document.querySelector('.cards')
+
 
 function cardMaker(obj){
 
@@ -99,10 +100,14 @@ function cardMaker(obj){
   location.textContent=`Location: ${obj.location}`
 
   const profileLink=document.createElement('p')
-  const link=document.createElement('a')
-  link.href=obj.html_url
-  //link.appendChild(profileLink)
-  profileLink.textContent=`Profile: ${link}`
+  const a=document.createElement('a')
+  a.href=obj.html_url
+  
+  // link.textContent='link'
+  profileLink.textContent = `Profile: `
+  a.href = obj.html_url;
+  a.textContent = obj.login;
+  
 
   const followers=document.createElement('p')
   followers.textContent=`Followers: ${obj.followers}`
@@ -114,13 +119,14 @@ function cardMaker(obj){
   bio.textContent=`Bio: ${obj.bio}`
 
   
-  hCard.appendChild(card)
+  //hCard.appendChild(card)
   card.appendChild(image)
   card.appendChild(cardInfo)
   cardInfo.appendChild(name)
   cardInfo.appendChild(username)
   cardInfo.appendChild(location)
   cardInfo.appendChild(profileLink)
+  profileLink.appendChild(a)
   cardInfo.appendChild(followers)
   cardInfo.appendChild(following)
   cardInfo.appendChild(bio)
@@ -128,8 +134,8 @@ function cardMaker(obj){
   return card
 }
 
-cardMaker()
-// cardMaker()
+// hCard.appendChild(card)
+
 /*
   List of LS Instructors Github username's:
     tetondan
