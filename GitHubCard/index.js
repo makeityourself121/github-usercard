@@ -44,7 +44,7 @@ const followersArray = [ 'tetondan',
       console.log(res)
         const pro=cardMaker(res.data)
         hCard.appendChild(pro)
-      //res.data=obj
+      
    
     // console.log(res.data.name)
     })
@@ -103,7 +103,7 @@ function cardMaker(obj){
   const a=document.createElement('a')
   a.href=obj.html_url
   
-  // link.textContent='link'
+ 
   profileLink.textContent = `Profile: `
   a.href = obj.html_url;
   a.textContent = obj.login;
@@ -134,7 +134,7 @@ function cardMaker(obj){
   return card
 }
 
-// hCard.appendChild(card)
+
 
 /*
   List of LS Instructors Github username's:
