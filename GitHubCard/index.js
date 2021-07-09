@@ -41,7 +41,7 @@ const followersArray = [ 'tetondan',
   followersArray.forEach(e=>{
     axios.get(`https://api.github.com/users/${e}`)
     .then((res)=> {
-      console.log(res)
+      // console.log(res)
         const pro=cardMaker(res.data)
         hCard.appendChild(pro)
       
@@ -81,12 +81,26 @@ function cardMaker(obj){
 
   const card=document.createElement('div')
   card.classList.add('card')
+  card.classList.add('open')
 
+  // card.addEventListener('click', function(){
+  //   card.classList.toggle('card')
+  // })
   const image=document.createElement('img')
   image.src= obj.avatar_url;
   
   const cardInfo=document.createElement('div')
   cardInfo.classList.add('card-info')
+  cardInfo.classList.add('tog')
+
+  image.addEventListener('click', function(){
+    cardInfo.classList.toggle('tog')
+    
+    card.classList.toggle('open')
+    
+    
+  })
+
 
   const name=document.createElement('h3')
   name.classList.add('name')
